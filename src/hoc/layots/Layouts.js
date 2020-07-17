@@ -1,10 +1,25 @@
 import React from 'react'
-import classes from './Layout.module.scss' 
+import classes from './Layout.module.scss'
+import ToggleMenu from '../../component/Navigation/MenuToggle/MenuToggle'
 
 class Layout extends React.Component {
+  state = {
+    menu: false
+  }
+
+  toggleMenuHandler = () => {
+    this.setState({
+      menu: !this.state.menu
+    })
+  }
+
   render() {
     return (
       <div className={classes.Layout}>
+        <ToggleMenu
+          onToggle={this.toggleMenuHandler}
+          isOpen={this.state.menu}
+        />
 
         <main>
           {this.props.children}
