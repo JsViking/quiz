@@ -35,6 +35,10 @@ class Quiz extends React.Component {
     ]
   }
 
+  componentDidMount() {
+    console.log('Quiz -', this.props.match.params.id)
+  }
+
   retryHandler = () => {
     this.setState({
       results: {},
