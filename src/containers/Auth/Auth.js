@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import classes from './Auth.module.scss'
 import Buttons from '../../component/UI/button/Button'
 import Input from '../../component/UI/Input/Input'
+import axios from 'axios'
+
+const API_KEY = 'AIzaSyAVZ3UI-VxAl39qvwCguGTx_lq0fV-cwqo'
 
 export default class Auth extends Component {
   state = {
@@ -34,12 +37,32 @@ export default class Auth extends Component {
     }
   }
 
-  loginHandler() {
-
+  loginHandler = async () => {
+    const authData = {
+      email: this.state.formControls.email.value,
+      password: this.state.formControls.password.value,
+      returnSecureToken: true
+    }
+    try {
+      const response = await axios.post(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${API_KEY}`, authData)
+      console.log('response', response.data)
+    } catch (error) {
+      console.error(error)
+    }
   }
 
-  registryHandler() {
-
+  registryHandler = async () => {
+    const authData = {
+      email: this.state.formControls.email.value,
+      password: this.state.formControls.password.value,
+      returnSecureToken: true
+    }
+    try {
+      const response = await axios.post(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${API_KEY}`, authData)
+      console.log('response', response.data)
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   submitHandler = event => event.preventDefault()
