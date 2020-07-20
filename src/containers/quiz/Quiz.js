@@ -51,15 +51,15 @@ class Quiz extends React.Component {
   onAnswerClickHandler = answerId => {
     if (this.state.answerState) {
       const key = Object.keys(this.state.answerState)[0]
-      if (key === 'sucsses') return
+      if (key === 'success') return
     }
     const question = this.state.quiz[this.state.activeQuestion]
     const results = this.state.results
 
     if (question.rightAnswerId === answerId) {
-      if (!results[question.id]) results[question.id] ='sucsses'
+      if (!results[question.id]) results[question.id] ='success'
       this.setState({
-        answerState: {[answerId]: 'sucsses'},
+        answerState: {[answerId]: 'success'},
         results
       })
 

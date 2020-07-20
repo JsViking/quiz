@@ -4,8 +4,8 @@ import Button from '../UI/button/Button'
 import { Link } from 'react-router-dom'
 
 export default props => {
-  const sucssesCount = Object.keys(props.results).reduce((acc, key) => {
-    if (props.results[key] === 'sucsses') return acc + 1
+  const successCount = Object.keys(props.results).reduce((acc, key) => {
+    if (props.results[key] === 'success') return acc + 1
     else return acc
   }, 0)
 
@@ -32,12 +32,12 @@ export default props => {
         }
       </ul>
 
-      <p>{sucssesCount} of {props.quiz.length}</p>
+      <p>{successCount} of {props.quiz.length}</p>
       
       <Button onClick={props.onRetry} type={'primary'}>Повторить</Button>
 
       <Link to="/">
-        <Button type={'sucsses'}>Перейти в список тестов</Button>
+        <Button type={'success'}>Перейти в список тестов</Button>
       </Link>
     </div>
   )

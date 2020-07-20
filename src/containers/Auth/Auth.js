@@ -15,7 +15,7 @@ export default class Auth extends Component {
         valid: false,
         touched: false,
         validation: {
-          requared: true,
+          required: true,
           email: true
         }
       },
@@ -45,8 +45,8 @@ export default class Auth extends Component {
   submitHandler = event => event.preventDefault()
 
   renderInputs() {
-    return Object.keys(this.state.formControls).map((key, index) => {
-      const control = this.state.formControls[key]
+    return Object.keys(this.state.formControls).map((controlName, index) => {
+      const control = this.state.formControls[controlName]
       return (
         <Input
           key={index}
@@ -57,7 +57,7 @@ export default class Auth extends Component {
           valid={control.valid}
           touched={control.touched}
           shouldValidation={control.validation && Object.keys(control).length > 0}
-          onChange={event => this.onChangeHandler(event, key)}
+          onChange={event => this.onChangeHandler(event, controlName)}
         />
       )
     }) 
@@ -87,7 +87,7 @@ export default class Auth extends Component {
 
     let isValidate = true
 
-    if (validation.requared) {
+    if (validation.required) {
       isValidate = Boolean(value.trim()) && isValidate
     }
 
@@ -113,7 +113,7 @@ export default class Auth extends Component {
             {this.renderInputs()}
 
             <Buttons 
-              type="sucsses" 
+              type="success" 
               onClick={this.loginHandler} 
               disabled={!this.state.isFormValid}>Войти</Buttons>
 
