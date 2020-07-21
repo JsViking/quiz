@@ -1,5 +1,8 @@
 import axios from '../../axios/axios-quiz'
-import {FETCH_QUIZES_START, FETCH_QUIZES_SUCCES, FETCH_QUIZES_ERROR, FETCH_QUIZ_SUCCES, QUIZ_SET_STATE} from './actionTypes'
+import {FETCH_QUIZES_START, FETCH_QUIZES_SUCCES, 
+  FETCH_QUIZES_ERROR, FETCH_QUIZ_SUCCES, 
+  QUIZ_SET_STATE, FINISH_QUIZ,
+  QUIZ_NEXT_QUESTION, RETRY_QUIZ} from './actionTypes'
 
 export function fetchQuizes() {
   return async dispatch => {
@@ -70,6 +73,19 @@ export function quizSetState(answerState, results) {
   }
 }
 
+export function finishQuiz() {
+  return {
+    type: FINISH_QUIZ
+  }
+}
+
+export function quizNextQuestion(number) {
+  return {
+    type: QUIZ_NEXT_QUESTION,
+    number
+  }
+}
+
 export function quizAnswerClick(answerId) {
   return (dispatch, getState) => {
     const state = getState().quizReducer
@@ -84,29 +100,29 @@ export function quizAnswerClick(answerId) {
     if (question.rightAnswerId === answerId) {
       if (!results[question.id]) results[question.id] ='success'
 
-      // this.setState({
-      //   answerState: {[answerId]: 'success'},
-      //   results
-      // })
-
+      dispatch(quizSetState({[answerId]: 'success'}, results))
       const timeOut = window.setTimeout(() => {
-        if (this.isQuizFinish()) {
-          // this.setState({isFinished: true})
+        if (isQuizFinish(state.activeQuestion, state.quiz)) {
+          dispatch(finishQuiz())
         } else {
-          // this.setState({
-          //   activeQuestion: this.props.activeQuestion + 1,
-          //   answerState: null
-          // })
+          dispatch(quizNextQuestion(state.activeQuestion + 1))
         }
 
         window.clearTimeout(timeOut)
       }, 1000)
     } else {
       results[question.id] = 'error'
-      // this.setState({
-      //   answerState: {[answerId]: 'error'},
-      //   results
-      // })
+      dispatch(quizSetState({[answerId]: 'error'}, results))
     }
   }
+}
+
+export function retryQuiz() {
+  return {
+    type: RETRY_QUIZ
+  }
+}
+
+function isQuizFinish(activeQuestion, quiz) {
+  return activeQuestion + 1 === quiz.length
 }
